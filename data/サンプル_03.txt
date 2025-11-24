@@ -1,0 +1,29 @@
+① DataFrame.rename() を使用する
+データ処理の内部的なカラム名（例: customer_id）を、ユーザー向けの表示名（例: 顧客ID）にマッピングして変更します。
+
+Python
+
+import streamlit as st
+import pandas as pd
+
+# 内部データ（内部的なカラム名は半角英数字を使用）
+data = {
+    'product_id': [101, 102, 103],
+    'item_name': ['リンゴ', 'バナナ', 'みかん'],
+    'unit_price': [120, 80, 150]
+}
+df_internal = pd.DataFrame(data)
+
+# カラム名マッピング辞書を定義
+japanese_names = {
+    'product_id': '商品ID',
+    'item_name': '商品名',
+    'unit_price': '単価（円）'
+}
+
+# DataFrameのカラム名を日本語にリネーム
+# axis='columns'またはcolumns=を使用
+df_display = df_internal.rename(columns=japanese_names)
+
+# Streamlitで表示
+st.dataframe(df_display)

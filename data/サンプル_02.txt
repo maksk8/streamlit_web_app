@@ -1,0 +1,9 @@
+st.tabs
+
+with tab_upload:
+with tab_process:
+with tab_result:
+
+tab_upload, tab_process, tab_result = st.tabs(["① データアップロード", "② データ結合・処理", "③ 結果とダウンロード"])
+
+st.session_state

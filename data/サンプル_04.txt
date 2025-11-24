@@ -1,0 +1,23 @@
+column_config 引数があります。これを使うと、元データのカラム名を変更せずに、表示名だけを変更できます。
+
+Python
+
+import streamlit as st
+import pandas as pd
+
+# 内部データ（内部的なカラム名は半角英数字を使用）
+df = pd.DataFrame({
+    'product_id': [101, 102, 103],
+    'item_name': ['リンゴ', 'バナナ', 'みかん'],
+    'unit_price': [120, 80, 150]
+})
+
+st.dataframe(
+    df,
+    column_config={
+        "product_id": st.column_config.TextColumn("商品ID"), # 表示名を設定
+        "item_name": st.column_config.TextColumn("商品名"),
+        "unit_price": st.column_config.NumberColumn("単価（円）", format="¥ %d") # さらに表示形式も設定可能
+    },
+    hide_index=True
+)

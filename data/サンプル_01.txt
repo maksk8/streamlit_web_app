@@ -1,0 +1,8 @@
+import streamlit as st
+
+# 仕様書.txt を読み込む
+with open("data/仕様書.txt", "r", encoding="utf-8") as f:
+    text = f.read()
+
+# 改行を保って表示
+st.text(text)
