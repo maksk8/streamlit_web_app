@@ -1,0 +1,8 @@
+変更をステージング
+git add .
+
+変更をコミット
+git commit -m "修正内容の短い説明"
+
+GitHubへプッシュ
+git push origin main

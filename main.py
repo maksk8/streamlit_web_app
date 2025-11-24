@@ -7,8 +7,8 @@ st.title('csv変換アプリ')
 # st.subheader('subheader')
 # st.text('テキスト')
 
-tab1, tab2, tab3, tab4 = st.tabs(
-    ["メインタブ", "アップロードデータ確認", "顧客データ確認", "仕様書"]
+tab1, tab2, tab3, tab4, tab5 = st.tabs(
+    ["メインタブ", "例：処理前", "例：顧客情報", "例：処理後", "仕様書"]
 )
 
 with tab1:
@@ -39,17 +39,44 @@ with tab1:
 
 
 with tab2:
-    if uploaded_file is not None:
-        st.dataframe(df_1, hide_index=True)
-    else:
-        st.write("アップロード前")
+    example_a = pd.read_csv('./data/売上データ_2025年11月.csv')
+    st.dataframe(
+        example_a, 
+        column_config={
+            "transaction_id": st.column_config.TextColumn("No."),
+            "date": st.column_config.TextColumn("取引日"), 
+            "company_name": st.column_config.TextColumn("会社名"), 
+            "sales_amount": st.column_config.TextColumn("売上金額"), 
+        },
+        hide_index=True
+    )
 
 
 with tab3:
-    client = pd.read_csv('./data/顧客コード.csv')
-    st.dataframe(client, hide_index=True)
+    example_b = pd.read_csv('./data/顧客コード.csv')
+    st.dataframe(
+        example_b, 
+        column_config={
+            "number": st.column_config.TextColumn("No."),
+            "company_name": st.column_config.TextColumn("会社名"), 
+            "ticker_code": st.column_config.TextColumn("顧客コード"), 
+            "sector": st.column_config.TextColumn("業種"), 
+        },
+        hide_index=True
+    )
 
 with tab4:
+    example_c = pd.read_csv('./data/result.csv')
+    st.dataframe(
+        example_c, 
+        column_config={
+            "ticker_code": st.column_config.TextColumn("顧客コード"), 
+            "sales_amount": st.column_config.TextColumn("売上金額"), 
+        },
+        hide_index=True
+    )
+
+with tab5:
     with open("data/仕様書.txt", "r", encoding="utf-8") as f:
         text = f.read()
-    st.text(text)
+    st.code(text)
