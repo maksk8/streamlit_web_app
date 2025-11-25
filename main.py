@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 # st.write(st.__version__)
-st.title('csv変換アプリ')
+st.title('売上データ変換')
 # st.caption('2025/11/18')
 # st.subheader('subheader')
 # st.text('テキスト')
@@ -18,7 +18,7 @@ with tab1:
         df_1 = pd.read_csv(uploaded_file)
         df_2 = pd.read_csv('./data/顧客コード.csv')
         df_3 = pd.merge(df_1, df_2, on='company_name', how='left')
-        df_4 = df_3.loc[:, ['date', 'ticker_code', 'sales_amount']]
+        df_4 = df_3.loc[:, ['transaction_id', 'date', 'ticker_code', 'sales_amount']]
         
         result = df_4.to_csv(index=False).encode('utf-8')
 
@@ -40,27 +40,27 @@ with tab2:
         text = f.read()
     st.code(text)
 
-    st.subheader('例：処理前データ')
+    st.subheader('例：処理前の売上データ')
     example_a = pd.read_csv('./data/売上データ_2025年11月.csv')
     st.dataframe(
         example_a, 
         column_config={
             "transaction_id": st.column_config.TextColumn("No."),
             "date": st.column_config.TextColumn("取引日"), 
-            "company_name": st.column_config.TextColumn("会社名"), 
+            "company_name": st.column_config.TextColumn("社名"), 
             "sales_amount": st.column_config.TextColumn("売上金額"), 
         },
         hide_index=True,
         height=150
     )
 
-    st.subheader('例：顧客データ')
+    st.subheader('例：顧客データベース')
     example_b = pd.read_csv('./data/顧客コード.csv')
     st.dataframe(
         example_b, 
         column_config={
             "number": st.column_config.TextColumn("No."),
-            "company_name": st.column_config.TextColumn("会社名"), 
+            "company_name": st.column_config.TextColumn("社名"), 
             "ticker_code": st.column_config.TextColumn("顧客コード"), 
             "sector": st.column_config.TextColumn("業種"), 
         },
@@ -68,11 +68,12 @@ with tab2:
         height=150
     )
 
-    st.subheader('例：処理後データ')
+    st.subheader('例：処理後の売上データ')
     example_c = pd.read_csv('./data/result.csv')
     st.dataframe(
         example_c, 
         column_config={
+            "transaction_id": st.column_config.TextColumn("No."),
             "date": st.column_config.TextColumn("取引日"),
             "ticker_code": st.column_config.TextColumn("顧客コード"), 
             "sales_amount": st.column_config.TextColumn("売上金額"), 
